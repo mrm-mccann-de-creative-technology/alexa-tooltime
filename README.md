@@ -1,57 +1,15 @@
-# CPW Season Calendar Alexa Skills
+# Alexa Tooltime skill
 
 HTTP Endpoint
 
-`https://apps.mrm.de/cpw-season-calendar/`
+`https://apps.mrm.de/alexa-tooltime/`
 
 Invocation Name:
 
-`Season calendar`
+`Tool time`
 
-This is a linear app. You just open it and listen and answer what she asks you.
+This is a linear app made for the alexa tooltime session.
 
+You can ask for a joke, fact or the weather. The answers are static and a random answer will be chosen and sent back.
 
-Intent Schema:
-
-```json
-{
-  "intents": [
-    {
-      "intent": "AMAZON.CancelIntent"
-    },
-    {
-      "intent": "AMAZON.HelpIntent"
-    },
-    {
-      "intent": "AMAZON.StopIntent"
-    },
-    {
-      "intent": "AMAZON.YesIntent"
-    },
-    {
-      "slots": [
-        {
-          "name": "fruit",
-          "type": "fruit"
-        }
-      ],
-      "intent": "chooseFruit"
-    },
-    {
-      "slots": [
-        {
-          "name": "recipeNr",
-          "type": "recipeNr"
-        }
-      ],
-      "intent": "chooseRecipe"
-    }
-  ]
-}
-```
-
-Slots:
-```
-Fruit: blueberry | raspberry | strawberry
-RecipeNr: 1 | 2 | 3
-```
+Intent Schema: You can find it on developer.amazon.com in the skill builder.
