@@ -1,0 +1,70 @@
+#!/bin/bash
+# Deploy changes to server (dry-run): [prod] [for-real] [first-run]
+
+# This scripts deploys the changes via rsync to the server.
+
+# Vars
+RED="\033[0;31m"
+WORKSPACE="."
+EXCLUDE_FILE="rsync-exclude.txt"
+UPLOADPATH=""
+
+DRY_RUN="--dry-run";
+SYNC_MSG="This was a dry run. Add 'for-real' as command to deploy for real to: "
+
+RSYNC_OPTIONS=(
+    --delete
+    -h
+    --compress
+    --archive
+    --verbose
+    --recursive
+    --itemize-changes
+    --stats
+    --rsh="ssh"
+    --owner # Must set this option or --chown does not work
+    --group # Must set this option or --chown does not work
+    --chown=apps:psacln # This is very important.
+)
+
+# Build the correct options for the rsync using the given arguments.
+# We loop over all the arguments.
+while [[ $# > 0 ]]
+do
+    key="$1"
+
+    case $key in
+        prod)
+            UPLOADPATH="appsmrm:~/httpdocs/alexa-tooltime/"
+        ;;
+
+        first-run)
+        ;;
+
+        for-real)
+            # Clear the dry-run options if we are really uploading stuff.
+            DRY_RUN=""
+
+            # Update the message to the user.
+            SYNC_MSG="Synced files to: "
+        ;;
+
+        *) # All other unknown options. Do nothing.
+        ;;
+    esac
+
+    shift
+done
+
+# Check if user has given a command
+if [[ $UPLOADPATH == "" ]]; then
+    MSG="PLease specify the environment by passing: int|prod"
+else
+    rsync $DRY_RUN "${RSYNC_OPTIONS[@]}" --exclude-from=$EXCLUDE_FILE $WORKSPACE "$UPLOADPATH"
+
+    MSG="Done !\n"$SYNC_MSG" -> "$UPLOADPATH
+fi
+
+echo ''
+echo -e $RED""$MSG
+echo ''

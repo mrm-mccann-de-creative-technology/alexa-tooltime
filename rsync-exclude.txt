@@ -1,0 +1,11 @@
+# Sublime project files.
+*.sublime-project
+*.sublime-workspace
+
+.DS_Store
+.idea
+deploy
+README.*
+rsync-exclude.txt
+*json
+.git
