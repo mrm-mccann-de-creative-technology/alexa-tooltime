@@ -9,6 +9,7 @@ $input = json_decode(file_get_contents("php://input"), true, 512);
 
 $applicationId = $input['session']['application']['applicationId'];
 
+// Only allow your skill to acces the service.
 if ($applicationId !== 'amzn1.ask.skill.9651cfcf-a76c-45ae-b9c5-0a3aa129dfca') {
     header('HTTP/1.0 403 Forbidden');
     exit;
@@ -23,7 +24,7 @@ function getReply($replyKey, $locale) {
 
     $replies = array(
         'onOpen' => array(
-            'en' => '<p>Hello, I am alexa tool-time. What would you like me to do?</p>',
+            'en' => '<p>Hello, I am your personal alexa skill. What would you like me to do?</p>',
             'de' => ''
         ),
         'StopIntent' => array(
@@ -113,9 +114,6 @@ function onIntentRequest($intentName, $slots, $attributes, $locale) {
             $weatherResponse .= '</p>';
             $weatherResponse = $weatherResponse . 'It will be ' . $weatherTypes[rand(0, count($weatherTypes) - 1)];
             sendResponse($locale, '<speak>' . $weatherResponse . '</speak>', null, null, true);
-            break;
-
-        case 'AMAZON.YesIntent':
             break;
 
         case 'AMAZON.StopIntent':

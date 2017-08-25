@@ -12,7 +12,7 @@ $randomJokes = array(
 );
 
 $germanJokes = array(
-    "You are in germany. We don't do jokes here. Go back to work."
+    "We don't do jokes in germany. Go back to work."
 );
 
 $dinosaurJokes = array(
